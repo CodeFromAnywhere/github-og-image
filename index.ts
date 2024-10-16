@@ -92,7 +92,7 @@ export default {
     const pathPart = path ? `/${path}` : "";
     const repoData = {
       title: `${owner}/${repo}${pathPart}`,
-      description: details.result.description,
+      description: details.result.description || "",
       avatarUrl: details.result.owner.avatar_url,
       tokens,
       issues: details.result.open_issues_count,
@@ -117,8 +117,9 @@ export default {
 
     //  return new Response(text, { headers: { "Content-Type": "text/html" } });
     return new ImageResponse(text, {
-      width: 600,
-      height: 315,
+      // 2x bigger than needed to prevent it being bad quality
+      width: 1200,
+      height: 630,
       format: "png",
     });
   },
