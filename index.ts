@@ -75,7 +75,8 @@ export default {
     });
     const url = new URL(request.url);
     const [_, owner, repo] = url.pathname.split("/");
-
+    const path = url.searchParams.get("path");
+    const tokens = url.searchParams.get("tokens");
     if (!owner || !repo) {
       return new Response("Not found", { status: 404 });
     }
@@ -88,18 +89,19 @@ export default {
 
     console.log(details.result);
 
+    const pathPart = path ? `/${path}` : "";
     const repoData = {
-      title: `${owner}/${repo}`,
+      title: `${owner}/${repo}${pathPart}`,
       description: details.result.description,
       avatarUrl: details.result.owner.avatar_url,
-      contributors: 1,
+      tokens,
       issues: details.result.open_issues_count,
       stars: details.result.stargazers_count,
       forks: details.result.forks_count,
     };
 
     const rewrite = new HTMLRewriter()
-      .on("#title, #description, #contributors, #issues, #stars, #forks", {
+      .on("#title, #description, #tokens, #issues, #stars, #forks", {
         element(el) {
           el.setInnerContent(repoData[el.getAttribute("id")]);
         },
@@ -117,7 +119,7 @@ export default {
     return new ImageResponse(text, {
       width: 600,
       height: 315,
-      format: "svg",
+      format: "png",
     });
   },
 };
