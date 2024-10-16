@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "jsx": "preserve",
+    "lib": ["ES2015"],
+    "types": ["./.wrangler/types/runtime"]
+  }
+}

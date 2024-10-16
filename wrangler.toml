@@ -1,0 +1,7 @@
+name = "github-og-image"
+main = "index.ts"
+compatibility_date = "2024-10-16"
+assets = { directory = "./" }
+
+[observability]
+enabled = true
